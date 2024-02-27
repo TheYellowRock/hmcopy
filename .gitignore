@@ -1,4 +1,8 @@
 node_modules
+<<<<<<< HEAD
+=======
+/.DS_Store
+>>>>>>> 37868d30b946a3e62468691018020111869c908a
 /.cache
 /build
 /dist
