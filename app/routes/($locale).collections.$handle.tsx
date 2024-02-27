@@ -8,6 +8,9 @@ import {
 } from '@shopify/hydrogen';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
+import Sidefilters from '~/components/collection/sidefilters';
+import SmallBanner from '~/components/homePage/SmallBanner';
+import TopBanner from '~/components/collection/TopBanner';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -40,30 +43,37 @@ export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
-      <Pagination connection={collection.products}>
-        {({nodes, isLoading, PreviousLink, NextLink}) => (
-          <>
-            <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-            </PreviousLink>
-            <ProductsGrid products={nodes} />
-            <br />
-            <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-            </NextLink>
-          </>
-        )}
-      </Pagination>
+    <div className="w-full flex flex-row">
+      <div className="w-1/6">
+        <Sidefilters />
+      </div>
+      <div className="w-5/6">
+        <TopBanner />
+        <h1 className='py-5 text-3xl font-bold'>Filters to be placed here</h1>
+        <p className="collection-description">{collection.description}</p>
+        <Pagination connection={collection.products}>
+          {({nodes, isLoading, PreviousLink, NextLink}) => (
+            <>
+              <PreviousLink>
+                {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+              </PreviousLink>
+              <ProductsGrid products={nodes} />
+              <ProductsGrid products={nodes} />
+              <br />
+              <NextLink>
+                {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+              </NextLink>
+            </>
+          )}
+        </Pagination>
+      </div>
     </div>
   );
 }
 
 function ProductsGrid({products}: {products: ProductItemFragment[]}) {
   return (
-    <div className="products-grid">
+    <div className="grid grid-cols-4">
       {products.map((product, index) => {
         return (
           <ProductItem
@@ -88,7 +98,7 @@ function ProductItem({
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="product-item"
+      className="product-item p-1 py-5"
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -96,14 +106,14 @@ function ProductItem({
       {product.featuredImage && (
         <Image
           alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
+          
           data={product.featuredImage}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
+      <h4 className='pt-5 pb-1 font-bold'>{product.title}</h4>
+      <small className='pb-5'>
         <Money data={product.priceRange.minVariantPrice} />
       </small>
     </Link>

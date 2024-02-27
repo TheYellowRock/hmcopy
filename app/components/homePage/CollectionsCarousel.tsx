@@ -1,68 +1,42 @@
-import {defer, json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
-import {Suspense} from 'react';
-import {
-  getPaginationVariables,
-  Image,
-  Money,
-  Pagination,
-} from '@shopify/hydrogen';
-import type {CollectionFragment} from 'storefrontapi.generated';
-import BigBanner from '~/components/homePage/BigBanner';
-import ImageBanner from '~/components/homePage/ImageBanner';
-import SmallBanner from '~/components/homePage/SmallBanner';
-import CtaBanner from '~/components/homePage/CtaBanner';
-
-export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
-};
+import {Link, useLoaderData} from '@remix-run/react';
+import {LoaderFunctionArgs, json} from '@remix-run/server-runtime';
+import {getPaginationVariables, Image, Pagination} from '@shopify/hydrogen';
+import React from 'react';
+import {CollectionFragment} from 'storefrontapi.generated';
 
 export async function loader({context, request}: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
+    pageBy: 4,
   });
 
   const {collections} = await context.storefront.query(COLLECTIONS_QUERY, {
     variables: paginationVariables,
   });
-  //const collectionsCarousel = collections.nodes
-  console.log({collections});
+
   return json({collections});
 }
 
-export default function Homepage() {
+export default function CollectionsCarousel() {
   const {collections} = useLoaderData<typeof loader>();
-  console.log({collections});
-  const imgUrl1 =
-    'https://cdn.shopify.com/s/files/1/0563/8835/4111/files/Screenshot_2024-02-11_012632.jpg?v=1707669052';
-  const imgUrl2 =
-    'https://cdn.shopify.com/s/files/1/0563/8835/4111/files/Screenshot_2024-02-11_172845.jpg?v=1707669052';
-  const bannerText1 = 'New denim styles for spring';
-  const bannerText2 = 'Flats in focus';
-
-  return (
-    <div className="home">
-      <BigBanner />
-      <ImageBanner imgUrl={imgUrl1} bannerText={bannerText1} />
-      <CollectionsCarousel collections={collections.nodes} />
-      <SmallBanner />
-      <ImageBanner imgUrl={imgUrl2} bannerText={bannerText2} />
-      <CtaBanner />
-    </div>
-  );
-}
-
-function CollectionsCarousel({
-  collections,
-}: {
-  collections: CollectionFragment[];
-}) {
+  console.log({collections})
   return (
     <div className="w-full">
-      <div className="mx-auto w-7/12 flex flex-col py-7">
+      <div className="mx-auto w-7/12 flex flex-col">
         <div className="font-bold">Popular categories</div>
-
-        <CollectionCarouselGrid collections={collections} />
+        <Pagination connection={collections}>
+          {({nodes, isLoading, PreviousLink, NextLink}) => (
+            <div>
+                <PreviousLink>
+              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+            </PreviousLink>
+               <CollectionCarouselGrid collections={nodes} /> 
+               <NextLink>
+              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+            </NextLink>
+            </div>
+            
+          )}
+        </Pagination>
       </div>
     </div>
   );
