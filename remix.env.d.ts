@@ -10,13 +10,12 @@ import type {
   CustomerAccount,
   HydrogenCart,
 } from '@shopify/hydrogen';
-<<<<<<< HEAD
+
 import type {
   LanguageCode,
   CountryCode,
 } from '@shopify/hydrogen/storefront-api-types';
-=======
->>>>>>> 37868d30b946a3e62468691018020111869c908a
+
 import type {AppSession} from '~/lib/session';
 
 declare global {
@@ -37,8 +36,6 @@ declare global {
     PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID: string;
     PUBLIC_CUSTOMER_ACCOUNT_API_URL: string;
   }
-<<<<<<< HEAD
-
   /**
    * The I18nLocale used for Storefront API query context.
    */
@@ -47,8 +44,7 @@ declare global {
     country: CountryCode;
     pathPrefix: string;
   };
-=======
->>>>>>> 37868d30b946a3e62468691018020111869c908a
+
 }
 
 declare module '@shopify/remix-oxygen' {
@@ -58,11 +54,11 @@ declare module '@shopify/remix-oxygen' {
   export interface AppLoadContext {
     env: Env;
     cart: HydrogenCart;
-<<<<<<< HEAD
+
     storefront: Storefront<I18nLocale>;
-=======
+
     storefront: Storefront;
->>>>>>> 37868d30b946a3e62468691018020111869c908a
+
     customerAccount: CustomerAccount;
     session: AppSession;
     waitUntil: ExecutionContext['waitUntil'];

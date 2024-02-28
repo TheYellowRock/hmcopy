@@ -45,11 +45,9 @@ export default {
       const {storefront} = createStorefrontClient({
         cache,
         waitUntil,
-<<<<<<< HEAD
+
         i18n: getLocaleFromRequest(request),
-=======
         i18n: {language: 'EN', country: 'US'},
->>>>>>> 37868d30b946a3e62468691018020111869c908a
         publicStorefrontToken: env.PUBLIC_STOREFRONT_API_TOKEN,
         privateStorefrontToken: env.PRIVATE_STOREFRONT_API_TOKEN,
         storeDomain: env.PUBLIC_STORE_DOMAIN,
@@ -115,7 +113,7 @@ export default {
     }
   },
 };
-<<<<<<< HEAD
+
 
 function getLocaleFromRequest(request: Request): I18nLocale {
   const url = new URL(request.url);
@@ -133,5 +131,4 @@ function getLocaleFromRequest(request: Request): I18nLocale {
 
   return {language, country, pathPrefix};
 }
-=======
->>>>>>> 37868d30b946a3e62468691018020111869c908a
+

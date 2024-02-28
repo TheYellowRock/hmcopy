@@ -22,10 +22,10 @@ import favicon from '../public/favicon.svg';
 import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
 import {Layout} from '~/components/Layout';
-<<<<<<< HEAD
+
 import tailwindStyles from './styles/tailwind.css';
-=======
->>>>>>> 37868d30b946a3e62468691018020111869c908a
+
+
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -52,10 +52,10 @@ export function links() {
   return [
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
-<<<<<<< HEAD
+
     {rel: 'stylesheet', href: tailwindStyles},
-=======
->>>>>>> 37868d30b946a3e62468691018020111869c908a
+
+
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
