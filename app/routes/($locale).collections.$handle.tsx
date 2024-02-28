@@ -8,7 +8,7 @@ import {
 } from '@shopify/hydrogen';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
-import Sidefilters from '~/components/collection/sidefilters';
+import Sidefilters from '~/components/collection/Sidefilters';
 import SmallBanner from '~/components/homePage/SmallBanner';
 import TopBanner from '~/components/collection/TopBanner';
 
